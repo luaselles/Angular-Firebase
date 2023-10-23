@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Lista } from 'src/app/models/lista';
 import { UuidGeneratorService } from '../uuid-generator';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,18 @@ import { UuidGeneratorService } from '../uuid-generator';
 export class ListaService {
   private localStorageKey: string = 'listas';
   constructor(
-    private _uuidService: UuidGeneratorService
-  ) { }
+    private _uuidService: UuidGeneratorService,
+    private firestore: Firestore
+  ) {
+  }
 
   private _getFromStorage() {
     const listasStorage = localStorage.getItem(this.localStorageKey);
-
     return listasStorage ? JSON.parse(listasStorage) : {};
+  }
+  private _getFromFileStore() {
+    const db = collection(this.firestore, this.localStorageKey);
+    return collectionData(db);
   }
 
   private _saveIntoStorage(listas: {} = {}) {

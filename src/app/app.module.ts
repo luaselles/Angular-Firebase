@@ -8,9 +8,13 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './pages/home';
 
-import {  ListaFormDialogComponent } from './components/lista/lista-form-dialog';
+import { ListaFormDialogComponent } from './components/lista/lista-form-dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app'
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'
+import firebaseconfig from 'src/firebase-config'
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +26,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     HomeComponent,
     ListaFormDialogComponent,
     ConfirmDialogComponent,
+    provideFirebaseApp(() => initializeApp(firebaseconfig)),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
