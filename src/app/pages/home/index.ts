@@ -34,8 +34,12 @@ export class HomeComponent {
   }
 
   atualizaLista() {
-    this._listas = this._listaService.getListas();
-    console.log(this._listas);
+    // this._listaService.getListas().subscribe((listas) => {
+    //   this._listas = listas;
+    // });
+    this._listaService.getListas().then((listas) => {
+      this._listas = listas;
+    });
   }
 
   abrirLista(lista: any) {
@@ -59,7 +63,7 @@ export class HomeComponent {
 
   private _openDialog(data: {}) {
     const dialogRef = this.dialog.open(ListaFormDialogComponent, {
-      data    
+      data
     });
 
     dialogRef.afterClosed().subscribe(this._onDialogClose.bind(this));
